@@ -1,24 +1,25 @@
 
 class Cuboid
-  attr_reader :origin
-  
+  attr_reader :origin, :verticii
+
   def initialize(origin, h: 0, w:0, l:0)
     @origin = origin #[h, w, l]
     @h = h
     @w = w
     @l = l
-
+    @verticii = []
     validate_input!
-    # generate_vertices
   end
   #BEGIN public methods that should be your starting point
 
   def move_to!(x, y, z)
-
+    @origin = [x, y, z]
+    generate_vertices
   end
 
 
   def vertices
+    generate_vertices if @verticii.empty?
   end
 
   #returns true if the two cuboids intersect each other.  False otherwise.
@@ -27,7 +28,20 @@ class Cuboid
 
   private
 
-  def generate_vertices(new_x, new_y, new_z)
+  def generate_vertices
+    @verticii.clear
+    x = origin[0]
+    y = origin[1]
+    z = origin[2]
+
+    @verticii << [x, y, z]
+    @verticii << [x + @l, y, z]
+    @verticii << [x + @l, y+@h, z]
+    @verticii << [x, y+@h, z]
+    @verticii << [x, y, z+@w]
+    @verticii << [x, y+@h, z+@w]
+    @verticii << [x+@l, y+@h, z+@w]
+    @verticii << [x+@l, y, z+@w]
 
   end
 
@@ -40,12 +54,12 @@ class Cuboid
       end
     end
   end
-
-
-
-  #END public methods that should be your starting point
 end
 
+# #
+# cuboid1 = Cuboid.new([1, 2, 3], h:4, w:5, l:1 )
 #
-# cuboid1 = Cuboid.new([0, 0, 0], h:4, w:5, l:1 )
-# p cuboid1
+# # cuboid1.vertices
+# # cuboid1.move_to!(1, 2, 3)
+# cuboid1.vertices
+# p cuboid1.verticii
