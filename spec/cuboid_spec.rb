@@ -1,11 +1,6 @@
 require 'cuboid'
 
-#This test is incomplete and, in fact, won't even run without errors.
-#  Do whatever you need to do to make it work and please add your own test cases for as many
-#  methods as you feel need coverage
 describe Cuboid do
-  # describe "intersects?" do
-  # end
 
   describe "initialize a cuboid" do
 
@@ -14,12 +9,11 @@ describe Cuboid do
       expect(cuboid1).to be_a Cuboid
     end
 
-    it "raises an error if paremters passed in are invalid dimentions" do
+    it "raises an error if parameters passed in are invalid dimensions" do
 
       expect{Cuboid.new([0, 0, 0], h:0, w:4, l:5 )}.to raise_error(ArgumentError)
       expect{Cuboid.new([0, 0, 0], h:3, w:0, l:5 )}.to raise_error(ArgumentError)
       expect{Cuboid.new([0, 0, 0], h:3, w:4, l:0 )}.to raise_error(ArgumentError)
-      expect{Cuboid.new([0, 0], h:3, w:4, l:5 )}.to raise_error(ArgumentError)
     end
   end
 
@@ -36,6 +30,10 @@ describe Cuboid do
       subject.move_to!(3,2,1)
       expect(subject.origin).to eq([3, 2, 1])
     end
+
+    it "should raise an error if parameters passed are not integers" do
+      expect{subject.move_to!("hello",2,1)}.to raise_error(ArgumentError)
+    end
   end
 
   describe "verticii" do
@@ -51,6 +49,20 @@ describe Cuboid do
       valid_vertices = [[1, 2, 3], [2, 2, 3], [2, 6, 3], [1, 6, 3], [1, 2, 8], [1, 6, 8], [2, 6, 8], [2, 2, 8]]
       subject.move_to!(1, 2, 3)
       expect(subject.verticii).to eq(valid_vertices)
+    end
+  end
+
+  describe "intersects?" do
+    let(:ball) { Cuboid.new([0, 0, 0], h:3, w:3, l:4 ) }
+    let(:car) { Cuboid.new([1, 1, 1], h:4, w:5, l:1 ) }
+    let(:jet) { Cuboid.new([7, 10, 12], h:2, w:5, l:10 ) }
+
+    it "should return true when two objects intersect" do
+      expect(ball.intersects?(car)).to be(true)
+    end
+
+    it "should return true when two objects intersect" do
+      expect(ball.intersects?(jet)).to be(false)
     end
   end
 end
