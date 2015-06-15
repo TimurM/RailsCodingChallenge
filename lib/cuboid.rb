@@ -71,15 +71,3 @@ class Cuboid
     end
   end
 end
-
-# #
-# cuboid1 = Cuboid.new([1, 2, 3], h:4, w:5, l:1 )
-# cuboid2 = Cuboid.new([6, 3, 4], h:4, w:5, l:1 )
-#
-# cuboid1.vertices
-# cuboid2.vertices
-# # cuboid1.move_to!(1, 2, 3)
-#
-# p cuboid1.verticii
-# p cuboid2.verticii
-# p cuboid1.intersects?(cuboid2)
